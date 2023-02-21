@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://jsbsim.sf.net/JSBSimScript.xsl"?>
+<runscript xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jsbsim.sf.net/JSBSimScript.xsd" name="787-8_18R From Beijing to Xian">
+
+    <description>For testing autopilot capability of 787-8</description>
+
+    <use aircraft="787-8" initialize="787-8_init_pos" />
+
+    <run start="0.0" end="3600" dt="0.1">
+        <property value="1"> simulation/notify-time-trigger </property>
+
+        <event name="Standard Notification" persistent="true">
+            <condition> simulation/notify-time-trigger ge 0.5 </condition>
+            <set name="simulation/notify-time-trigger" value="0" />
+            <notify>
+                <property>
+                    simulation/sim-time-sec
+                </property>
+                <property caption="Airspeed ()">
+                    velocities/vc-fps
+                </property>
+                <property caption="long (deg)">
+                    position/long-gc-deg
+                </property>
+                <property caption="lat (deg)">
+                    position/lat-gc-deg
+                </property>
+                <property caption="alt (km)">
+                    position/h-agl-km
+                </property>
+            </notify>
+        </event>
+
+
+        <event name="Set the engines running">
+            <description> Setting the engines running at the initial position</description>
+            <condition> simulation/sim-time-sec le 0.1 </condition>
+            <set name="propulsion/engine[0]/set-running" value="1"/>
+            <set name="propulsion/engine[1]/set-running" value="1"/>
+            <set name="fcs/throttle-cmd-norm[0]" value="1.0"/>
+            <set name="fcs/throttle-cmd-norm[1]" value="1.0"/>
+            <set name="gear/gear-cmd-norm" value="0"/>
+
+            <set name="guidance/target_wp_latitude_rad" value="0.6999092780623879"/>
+            <set name="guidance/target_wp_longitude_rad" value="2.0345164924699346"/>
+            <set name="ap/altitude_setpoint" action="FG_EXP" value="142.0" tc="1.0"/>
+            <set name="ap/airspeed_setpoint" tc="1.0" action="FG_EXP" value="259.8"/>
+
+            <!-- <set name="ap/heading_setpoint" value="0"/> -->
+            <set name="ap/heading-setpoint-select" value="0"/>
+            <set name="ap/heading_hold" value="1"/>
+            <set name="ap/active-waypoint" value="0"/>
+            <set name="ap/attitude_hold" value="0"/>
+        </event>
+
+        <event name="Head to first waypoint">
+            <description>
+                Set heading hold to selected waypoint (setpoint) instead of
+                previously specified heading when at the initial position.
+            </description>
+            <condition> ap/active-waypoint eq 0</condition>
+            <set name="ap/heading-setpoint-select" value="1"/>
+            <set name="ap/active-waypoint" value="1"/>
+            <set name="simulation/notify-time-trigger" value="1" />
+            <notify />
+        </event>
+
+        <event name="Terminate">
+            <description>
+                When the aircraft arrives at (ith waypoint)
+                then terminate the simulation.
+            </description>
+            <condition>
+                guidance/wp-distance lt 10
+                ap/active-waypoint eq 5
+            </condition>
+            <set name="simulation/terminate" value="1"/>
+            <notify />
+        </event>
+
+        <event name="Set fith waypoint">
+            <description>
+                set the fith waypoint.
+            </description>
+            <condition>
+                guidance/wp-distance lt 10
+                ap/active-waypoint eq 4
+            </condition>
+            <set name="guidance/target_wp_latitude_rad" value="0.6994228337084536"/>
+            <set name="guidance/target_wp_longitude_rad" value="2.0345884312146563"/>
+            <set name="ap/altitude_setpoint" action="FG_EXP" value="180.0" tc="1.0"/>
+            <set name="ap/airspeed_setpoint" tc="1.0" action="FG_EXP" value="273.2"/>
+            <set name="simulation/notify-time-trigger" value="1" />
+            <set name="ap/active-waypoint" value="5"/>
+        </event>
+
+        <event name="Set fourth waypoint">
+            <description>
+                set the fourth waypoint.
+            </description>
+            <condition>
+                guidance/wp-distance lt 10
+                ap/active-waypoint eq 3
+            </condition>
+            <set name="guidance/target_wp_latitude_rad" value="0.6994369268664935"/>
+            <set name="guidance/target_wp_longitude_rad" value="2.03458810919455"/>
+            <set name="ap/altitude_setpoint" action="FG_EXP" value="170.0" tc="1.0"/>
+            <set name="ap/airspeed_setpoint" tc="1.0" action="FG_EXP" value="270.14"/>
+            <set name="simulation/notify-time-trigger" value="1" />
+            <set name="ap/active-waypoint" value="4"/>
+        </event>
+
+        <event name="Set third waypoint">
+            <description>
+                set the third waypoint.
+            </description>
+            <condition>
+                guidance/wp-distance lt 10
+                ap/active-waypoint eq 2
+            </condition>
+            <set name="guidance/target_wp_latitude_rad" value="0.6994525020510618"/>
+            <set name="guidance/target_wp_longitude_rad" value="2.0345877533074117"/>
+            <set name="ap/altitude_setpoint" action="FG_EXP" value="157.0" tc="1.0"/>
+            <set name="ap/airspeed_setpoint" tc="1.0" action="FG_EXP" value="266"/>
+            <set name="simulation/notify-time-trigger" value="1" />
+            <set name="ap/active-waypoint" value="3"/>
+        </event>
+
+
+        <event name="Set second waypoint">
+            <description>
+                set the second waypoint.
+            </description>
+            <condition>
+                guidance/wp-distance lt 10
+                ap/active-waypoint eq 1
+            </condition>
+            <set name="guidance/target_wp_latitude_rad" value="0.69994697015542115"/>
+            <set name="guidance/target_wp_longitude_rad" value="2.0345873602992675"/>
+            <set name="ap/altitude_setpoint" action="FG_EXP" value="143.3" tc="1.0"/>
+            <set name="ap/airspeed_setpoint" tc="1.0" action="FG_EXP" value="263"/>
+            <set name="simulation/notify-time-trigger" value="1" />
+            <set name="ap/active-waypoint" value="2"/>
+        </event>
+
+    </run>
+
+</runscript>
