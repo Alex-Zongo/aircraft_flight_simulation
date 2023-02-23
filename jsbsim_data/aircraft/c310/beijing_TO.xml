@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<initialize name="beijing" version="2">
+<initialize name="beijing_TO" version="2">
   <!--
     This file sets up the aircraft to start off
     from the runway in preparation for takeoff.
@@ -17,13 +17,13 @@
   -->
 
   <position frame="ECEF">
-    <altitudeAGL unit="FT"> 10  </altitudeAGL>
-    <latitude type="geodetic" unit="DEG"> 40.0895 </latitude>
-    <longitude unit="DEG"> 116.595 </longitude>
+    <altitudeAGL unit="FT"> 5  </altitudeAGL>
+    <latitude type="geodetic" unit="DEG"> 40.1019576750232 </latitude>
+    <longitude unit="DEG"> 116.569710068287 </longitude>
   </position>
 
   <orientation unit="DEG" frame="LOCAL">
-    <yaw>   173  </yaw>
+    <yaw>   170  </yaw>
   </orientation>
 
   <velocity unit="FT/SEC" frame="LOCAL">
@@ -38,6 +38,6 @@
     <z> 0.0 </z>
   </attitude_rate>
 
-  <elevation unit="FT">   125  </elevation>
+  <elevation unit="FT">   118  </elevation>
 
 </initialize>

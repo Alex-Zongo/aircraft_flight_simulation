@@ -6,7 +6,7 @@
 
     <use aircraft="787-8" initialize="787-8_init_pos" />
 
-    <run start="0.0" end="3600" dt="0.1">
+    <run start="0.0" end="3600" dt="0.01">
         <property value="1"> simulation/notify-time-trigger </property>
 
         <event name="Standard Notification" persistent="true">
@@ -16,7 +16,7 @@
                 <property>
                     simulation/sim-time-sec
                 </property>
-                <property caption="Airspeed ()">
+                <property caption="Airspeed (fps)">
                     velocities/vc-fps
                 </property>
                 <property caption="long (deg)">
